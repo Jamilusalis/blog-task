@@ -29,7 +29,7 @@
                 </svg> 2 Sep, 2020 21:30:50
               </span>
             </p>
-            <img src="img/BG_black.jpg" class="card" alt="...">
+            <img src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg" class="card" alt="...">
             <p class="card-text">
               <!-- post content below here-->
                 This is a wider card with text below as a natural lead-in to additional content. This content is a little bit longer.
