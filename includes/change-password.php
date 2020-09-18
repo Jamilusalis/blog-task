@@ -80,7 +80,7 @@ if(isset($_POST['change_password'])){
 			 // execute the query
 			if($stmt->execute()){
 				echo '<script>alert("Password was reset successfully")</script>'; 
-				//header('Location: category.php');
+				//header('Location: get-started.php.php');
 			} else {
 				echo "<div class='alert alert-danger text-center py-4'>Unable to reset password.</div>";
 			}   

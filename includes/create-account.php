@@ -108,7 +108,7 @@ if(isset($_POST['create'])){
 							  <input type="submit" name="create" class="btn btn-outline-primary btn-block" value="Create account">
 						</form>	
 							
-					<a href="login.php" class="btn my-2 btn-outline-primary btn-block text-center">Login to your account</a>
+					<a href="get-started.php.php" class="btn my-2 btn-outline-primary btn-block text-center">Login to your account</a>
 							
 						 </div>
 						</div>
