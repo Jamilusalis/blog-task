@@ -94,7 +94,7 @@ if(isset($_POST['create'])){
 						<form action="<?php echo html_entity_decode($_SERVER["PHP_SELF"]);?>" method="post">
 						  <div class="card-body">
 							  <div class="form-group">
-								<label for="examplealex">Full name</label>
+								<label for="examplealex">Fullname</label>
 								<input type="text" class="form-control" id="fullname" name="fullname" required>
 							  </div>
 							  <div class="form-group">
@@ -108,7 +108,7 @@ if(isset($_POST['create'])){
 							  <input type="submit" name="create" class="btn btn-outline-primary btn-block" value="Create account">
 						</form>	
 							
-					<a href="get-started.php.php" class="btn my-2 btn-outline-primary btn-block text-center">Login to your account</a>
+					<a href="get-started.php" class="btn my-2 btn-outline-primary btn-block text-center">Login to your account</a>
 							
 						 </div>
 						</div>
