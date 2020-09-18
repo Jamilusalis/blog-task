@@ -5,27 +5,27 @@
     <?php include('includes/head.php') ?>
   </head>
   <body>
+	
   	<!-- include nav-menu file -->
     <?php include('includes/nav.php') ?>
 	
-    <!-- include post file -->
-    <?php 
-		
+	<?php  
 		if(isset($_SESSION["author_id"]) && isset($_SESSION["author_role"]) ){
 			echo '
-				<div class="alert alert-info text-center" role="alert">
-					Welcome '; echo $_SESSION["author_name"]; echo ' You can now 
-					<a href="add-post.php"><strong>create a post</strong></a>.
+				<div class="alert alert-danger text-center" role="alert">
+					You have already registered and login! You may <a href="logout.php"><strong>logout</strong></a> if you wish to.
 				</div>';
 		}
-	
-		include('includes/all-post.php') 
+		else {
+			include('includes/create-account.php');
+		}
 	?>
-
+	
     <!-- include confirmation modal file -->
     <?php include('includes/confirm-action.php') ?>
-
+	
     <!-- include foot file -->
     <?php include('includes/foot.php') ?>
+	
   </body>
 </html>

@@ -8,20 +8,29 @@
   	<!-- include nav-menu file -->
     <?php include('includes/nav.php') ?>
 	
-    <!-- include post file -->
-    <?php 
-		
+	<?php  
 		if(isset($_SESSION["author_id"]) && isset($_SESSION["author_role"]) ){
-			echo '
-				<div class="alert alert-info text-center" role="alert">
-					Welcome '; echo $_SESSION["author_name"]; echo ' You can now 
-					<a href="add-post.php"><strong>create a post</strong></a>.
-				</div>';
+			
+			if($_SESSION['author_role'] == 1 ){
+				// <!-- include all post by user file -->
+				include('includes/add-category.php');
+			}
+			else {
+				echo '
+					<div class="alert alert-danger text-center" role="alert">
+					  Sorry but only administrators are authorized to view this page!
+					</div>';
+			}
 		}
-	
-		include('includes/all-post.php') 
+		else {
+			echo '
+			<div class="alert alert-danger text-center" role="alert">
+			  You are not authorized to view this page!
+			</div>
+			';
+		}
 	?>
-
+	
     <!-- include confirmation modal file -->
     <?php include('includes/confirm-action.php') ?>
 
