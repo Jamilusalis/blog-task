@@ -77,7 +77,10 @@ catch(PDOException $exception){
 				</p>
 			<hr>
 			
-			<div class="table-responsive-sm"><?php echo html_entity_decode($content, ENT_QUOTES); ?></div>
+			<div class="table-responsive-sm">
+			<img src="uploads/<?php if("{$image}" == "") echo ""; else echo "{$image}"; ?>" alt=""">
+			
+			<?php echo html_entity_decode($content, ENT_QUOTES); ?></div>
 			<small class="card-text text-muted py-4">
               <?php if(html_entity_decode($modified_at, ENT_QUOTES) == "") echo ""; else echo "Last updated on: ". html_entity_decode($modified_at, ENT_QUOTES);  ?>
             </small>

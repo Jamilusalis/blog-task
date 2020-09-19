@@ -105,11 +105,11 @@ if($_POST){
 						</div>
                       
                         <div class="form-group col-md-6">
-							<label for="">Featured image</label>
+						  <label for="">Featured image</label>
                           <div class="input-group">
                             <div class="custom-file">
                               <input type="file" class="custom-file-input" id="post_image" name="image" accept="image/*">
-                              <label class="custom-file-label form-control" for="inputGroupFile01">Choose featured image</label>
+                              <label class="custom-file-label form-control">Choose featured image</label>
                             </div>
                           </div>
                         </div>

@@ -12,4 +12,4 @@
 <!-- ckeditor -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.8.0/ckeditor.js"></script>
 
-<script src="https://cdn.tiny.cloud/1/fk3gd4rkafyiymeddyokvztgx88727ff9ae99ye4r9r8zp4t/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
