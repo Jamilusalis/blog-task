@@ -51,12 +51,12 @@ function delete_category(id){
 	// document.getElementById('post_id').value = id;
 	// $('#confirmAction').modal('show');
 	
-	 var answer = confirm('Are you sure you want to delete this post? This action cannot be undone and will be unable to recover.' + id);
+	 var answer = confirm('Are you sure you want to delete this post? This action cannot be undone and will be unable to recover.');
 	if (answer){
 		// if user clicked ok, 
 		// pass the id to delete.php and execute the delete query
 		window.location = 'delete-category.php?id=' + id;
-	}  
+	} 
 }
 
 

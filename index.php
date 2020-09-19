@@ -8,6 +8,10 @@
   	<!-- include nav-menu file -->
     <?php include('includes/nav.php') ?>
 	
+	<?php 
+		
+	?>
+	
     <!-- include post file -->
     <?php 
 		

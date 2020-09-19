@@ -10,105 +10,6 @@
 
 <?php
 
-// check if form was submitted
-if($_POST){
-
-	try{
-	
-		// in this case, it seemed like we have so many fields to pass and 
-		// it is better to label them and not use question marks
-		$query = "UPDATE post 
-					SET title=:title, category_id=:category_id, content=:content, modified_at=:modified_at 
-					WHERE id = :id";
-
-		// prepare query for excecution
-		$stmt = $con->prepare($query);
-
-		// posted values
-		$title=htmlspecialchars(strip_tags($_POST['title']));
-		$category_id=htmlspecialchars(strip_tags($_POST['category_id']));
-		date_default_timezone_set("Africa/Lagos");
-		$modified_at=date('Y-m-d H:i:s');
-		
-		//$image=!empty($_FILES["image"]["name"])
-		//		? sha1_file($_FILES['image']['tmp_name']) . "-" . basename($_FILES["image"]["name"])
-		//		: "";
-        // $image=htmlspecialchars(strip_tags($image));
-		$content=html_entity_decode($_POST['content']);
-
-		// bind the parameters
-		$stmt->bindParam(':title', $title);
-		$stmt->bindParam(':category_id', $category_id);
-		// $stmt->bindParam(':image', $image);
-		$stmt->bindParam(':content', $content);
-		$stmt->bindParam(':modified_at', $modified_at);
-		$stmt->bindParam(':id', $id);
-		
-		// Execute the query
-		if($stmt->execute()){
-			echo '<script>alert("Record was updated successfully")</script>'; 
-			
-		/*	// now, if image is not empty, try to upload the image
-			if($image){
-
-				// sha1_file() function is used to make a unique file name
-				$target_directory = "uploads/";
-				$target_file = $target_directory . $image;
-				$file_type = pathinfo($target_file, PATHINFO_EXTENSION);
-
-				// error message is empty
-				$file_upload_error_messages="";
-				// make sure that file is a real image
-				$check = getimagesize($_FILES["image"]["tmp_name"]);
-				if($check!==false){
-					// submitted file is an image
-				}else{
-					$file_upload_error_messages.="<div>Submitted file is not an image.</div>";
-				}
-				
-				// make sure submitted file is not too large, can't be larger than 5 MB
-				if($_FILES['image']['size'] > (5120000)){
-					$file_upload_error_messages.="<div>Image must be less than 5 MB in size.</div>";
-				}
-				
-				// if $file_upload_error_messages is still empty
-				if(empty($file_upload_error_messages)){
-					// it means there are no errors, so try to upload the file
-					if(move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)){
-						
-					}
-					else{
-						echo "<div class='alert alert-danger'>";
-							echo "<div>Unable to upload photo.</div>";
-						echo "</div>";
-					}
-				}
-
-				// if $file_upload_error_messages is NOT empty
-				else{
-					// it means there are some errors, so show them to user
-					echo "<div class='alert alert-danger'>";
-						echo "<div>{$file_upload_error_messages}</div>";
-					echo "</div>";
-				}
-			}
-			*/
-			
-		}else{
-			echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
-		}	
-	}
-	// show errors
-	catch(PDOException $exception){
-		die('ERROR: ' . $exception->getMessage());
-	}
-} 
-
-?>
-
-
-<?php
-
 // read current record's data
 try {
     // prepare select query
@@ -132,6 +33,7 @@ try {
      $author_id = $row['author_id'];
      $content = $row['content'];
 	 
+	 $GLOBALS['old_image'] = $row['image'];
 }
  
 // show error
@@ -140,6 +42,85 @@ catch(PDOException $exception){
 }
 
 ?>
+
+<?php
+	 
+// check if form was submitted
+if($_POST){
+
+	try{
+	
+		// in this case, it seemed like we have so many fields to pass and 
+		// it is better to label them and not use question marks
+		$query = "UPDATE post 
+					SET title=:title, image=:image, category_id=:category_id, content=:content, modified_at=:modified_at 
+					WHERE id = :id";
+
+		// prepare query for excecution
+		$stmt = $con->prepare($query);
+
+		// posted values
+		$title=htmlspecialchars(strip_tags($_POST['title']));
+		$category_id=htmlspecialchars(strip_tags($_POST['category_id']));
+		date_default_timezone_set("Africa/Lagos");
+		$modified_at=date('Y-m-d H:i:s');
+		$content=html_entity_decode($_POST['content']);
+		
+		
+		
+		$image=!empty($_FILES["image"]["name"]) ? rand(10000,100000000) . "-" . basename($_FILES["image"]["name"]) : "";
+        $image=htmlspecialchars(strip_tags($image)); 
+		
+		// if image is not empty, try to upload the image
+		if($image){
+			$target_directory = "uploads/"; $target_file = $target_directory . $image;
+			// error message is empty
+			$file_upload_error_messages="";
+			if(empty($file_upload_error_messages)){
+				if(move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)){
+					// do nothing since image is moved successfully
+				}
+				else{
+					echo "<div class='alert alert-danger'> <div>Unable to upload image. Please consider updating 
+					your post to re-upload image</div> </div>";
+				}
+			}
+			// if $file_upload_error_messages is NOT empty
+			else{
+				echo "<div class='alert alert-danger'>"; echo "<div>{$file_upload_error_messages}</div>";
+				echo "<div>Unable to upload image. Please consider updating your post to re-upload image</div>"; echo "</div>";
+			}
+		} // end of if image is not empty
+		
+		else {
+		   // if no image selected the old image remain as it is.
+		   $image = $old_image; // old image from database
+		} 
+		
+		// bind the parameters
+		$stmt->bindParam(':title', $title);
+		$stmt->bindParam(':category_id', $category_id);
+		$stmt->bindParam(':image', $image);
+		$stmt->bindParam(':content', $content);
+		$stmt->bindParam(':modified_at', $modified_at);
+		$stmt->bindParam(':id', $id);
+		
+		// Execute the query
+		if($stmt->execute()){
+			echo '<script>alert("Record was updated successfully")</script>'; 
+			header("refresh:1;all-posts.php");
+		}else{
+			echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
+		}
+	}
+	// show errors
+	catch(PDOException $exception){
+		die('ERROR: ' . $exception->getMessage());
+	}
+} 
+
+?>
+
 <!-- PHP update code start -->
 
 <main role="main" class="container py-4">

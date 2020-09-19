@@ -31,8 +31,9 @@ if(isset($_POST['reset'])){
 			$stmt = $con->prepare($query);
 		
 			// posted values and token generator
-			$n = 20;
-			$token = bin2hex(random_bytes($n));
+			$token = '0123456789abcdefghijklmnopqrstuvwxyz';
+			$token = substr(str_shuffle($token), 0, 10);
+			
 			$email=htmlspecialchars(strip_tags($_POST['email']));
 			
 			// bind the parameters
@@ -61,10 +62,10 @@ if(isset($_POST['reset'])){
 				$user_ip = $_SERVER['REMOTE_ADDR'];
 			}
 			
-			$body = "Hi {$send_to_fullname}.<br /><br />
+			$body = "<br />Hi <b>{$send_to_fullname}</b>.<br /><br />
 				<p> We have a request to update your account password from: IP: {$user_ip}. <br /><br />
 				To confirm your new password changes, please copy & paste the following verification code 
-				into the required form: </p> <br /> <strong>{$token}</strong>";
+				into the required form: </p> <br /> <p> <strong>{$token}</strong> </p> <br />";
 			$subject="Confirmation of password reset for your account on MJTech Blog";
 			
 			$user_id = $row1['user_id'];
@@ -72,10 +73,9 @@ if(isset($_POST['reset'])){
 			// execute the query
 			if($stmt->execute()){
 				echo '<script>alert("Please check your email for further instruction")</script>';
-				//header('Location: authorize-changes.php?id=?id= + $user_id ');
 				
 				if(mail($send_to_email, $subject, $body, $headers)){
-					//header('Location: authorize-changes.php?id= echo "{$c_id}";');
+					header('Location: authorize-changes.php?id='.$row1["user_id"].'');
 				}
 				else{
 					echo '<script>alert("An error occur while sending you a verification code to your email. 

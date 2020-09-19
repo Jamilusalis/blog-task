@@ -39,7 +39,7 @@ if(isset($_POST['save'])){
         // execute the query
         if($stmt1->execute()){
 			echo '<script>alert("Record was saved successfully")</script>'; 
-			header('Location: category.php');
+			header('refresh:0;category.php');
         } else {
             echo "<div class='alert alert-danger text-center py-4'>Unable to save record.</div>";
         }     

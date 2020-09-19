@@ -1,6 +1,6 @@
 <?php
 // include database connection
-include 'database.php';
+include 'includes/database.php';
 
 try {
 	
@@ -16,7 +16,7 @@ try {
 	if($stmt->execute()){
 		// tell the user record was deleted and redirect the user
 		echo '<script>alert("Deleted successfully")</script>'; 
-		header('Location: all-posts.php');
+		header('refresh:0;all-posts.php');
 	}else{
 		die('Unable to delete record.');
 	}

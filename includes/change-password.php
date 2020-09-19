@@ -2,8 +2,15 @@
 
 <?php
 // isset() is a PHP function used to verify if a value is there or not
-$id=isset($_GET['id']) ? $_GET['id'] : die('<h3 class="text-center py-4">ERROR: cannot found user account!</h3>');
+$id=isset($_GET['id']) ? $_GET['id'] : die('<div class="alert alert-danger text-center" role="alert">
+											You are not authorized to access this page!</div>');
 
+if ($id == "") {
+	echo '
+	<div class="alert alert-danger text-center" role="alert">
+	You are not authorized to view this page!
+	</div>';
+}
 // read current record's data
 try {
 	include 'database.php';
@@ -26,7 +33,12 @@ try {
 	$GLOBALS['token'] = $token = $row['token']; 
 	
 	if ($email == "") {
-		//header('Location: get-started.php');
+		header('Location: get-started.php');
+	}
+	else {
+		echo '<div class="alert alert-info text-center" role="alert">
+		Please check your email for further instruction
+		</div>';
 	}
 }
 // show error
@@ -79,11 +91,11 @@ if(isset($_POST['change_password'])){
 			
 			 // execute the query
 			if($stmt->execute()){
-				echo '<script>alert("Password was reset successfully")</script>'; 
-				//header('Location: get-started.php.php');
+				echo '<script>alert("Password was reset successfully")</script>';
+				header('refresh:0;get-started.php');
 			} else {
 				echo "<div class='alert alert-danger text-center py-4'>Unable to reset password.</div>";
-			}   
+			}
 		
 		} else {
 			echo '<script>alert("Invalid verification code, please try again")</script>';

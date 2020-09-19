@@ -50,7 +50,7 @@ if(isset($_POST['create'])){
 			// execute the query
 			if($stmt->execute()){
 				echo '<script>alert("Account created successful, you may proceed to login")</script>'; 
-				//header('Location: get-started.php');
+				header('refresh:1;get-started.php');
 				
 			} else {
 				echo "<div class='alert alert-danger text-center py-4'>Unable to create user account.</div>";

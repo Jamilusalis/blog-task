@@ -9,8 +9,7 @@ include 'database.php';
 // select all data
 $query = "SELECT post.id, post.title, post.image, author.user_id, author.fullname, categories.c_id, categories.name, 
 		post.content, post.create_at, post.status, post.modified_at FROM post JOIN author ON author.user_id = post.author_id 
-		JOIN categories ON categories.c_id = post.category_id ORDER BY create_at ASC
-		";
+		JOIN categories ON categories.c_id = post.category_id ORDER BY create_at DESC, modified_at DESC";
 			
 //$query = "SELECT id, title, image, category_id, author_id, content, create_at, modified_at FROM post ORDER BY create_at DESC, modified_at DESC";
 $stmt = $con->prepare($query);
@@ -49,6 +48,7 @@ else{
 			<h4 class="display-12 text-center ">Explore thousands of content </h4> <br>
 			  
 			<form class="form col-md-12 text-center">
+			
 				<div class="input-group mb-3">
 				  <div class="input-group-prepend">
 					<span class="input-group-text bg-dark text-white" id="basic-addon1">
@@ -58,10 +58,14 @@ else{
 						</svg>
 					</span>
 				  </div>
-				  <input type="text" class="form-control bg-dark text-white" placeholder="Type any keyword to search...">
+				  
+				  <input type="text" class="form-control bg-dark text-white" placeholder="Type any keyword to search..." autocomplete="off">
 				</div>
+					
 			  <button class="btn btn-outline-primary text-white" type="submit">Search...</button>
 			</form>
+			
+			
 			
 			</div>
 		</div>
@@ -79,6 +83,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
     <?php 
       if($num > 0){
           // data from database will be here   
+		  $create_at=date('Y-m-d');
       ?>
 		<!-- start of single post -->
 			<div class="col-md-6">
